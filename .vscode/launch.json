@@ -1,0 +1,33 @@
+// {
+//     "configurations": [
+//       {
+//         "type": "lua-local",
+//         "request": "launch",
+//         "name": "Debug Custom Executable",
+//         "program": {
+//           "command": "love"
+//         },
+//         "args": [
+//           "."
+//         ]
+//       }
+//     ]
+//   }
+
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lua-local",
+            "request": "launch",
+            "name": "Launch Love2D",
+            "program": {
+                "command": "love"
+            },
+            "args": [
+                "${workspaceFolder}"
+            ],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
