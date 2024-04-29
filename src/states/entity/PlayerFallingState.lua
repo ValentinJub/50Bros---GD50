@@ -65,6 +65,10 @@ function PlayerFallingState:update(dt)
                 self.player.dy = 0
                 self.player.y = object.y - self.player.height
 
+                if object.consumable then
+                    object.onCollide(self, object)
+                end
+
                 if love.keyboard.isDown('left') or love.keyboard.isDown('right') then
                     self.player:changeState('walking')
                 else

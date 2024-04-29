@@ -59,7 +59,11 @@ function PlayerJumpState:update(dt)
     for k, object in pairs(self.player.level.objects) do
         if object:collides(self.player) then
             if object.solid then
-                object.onCollide(object)
+                if object.consumable then
+                    object.onCollide(self, object)
+                else
+                    object.onCollide(object)
+                end
 
                 self.player.y = object.y + object.height
                 self.player.dy = 0

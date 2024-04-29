@@ -7,7 +7,7 @@
 
 PlayState = Class{__includes = BaseState}
 
-function PlayState:init()
+function PlayState:init(params)
     self.camX = 0
     self.camY = 0
     self.level = LevelMaker.generate(100, 10)
@@ -79,6 +79,12 @@ function PlayState:render()
     love.graphics.print(tostring(self.player.score), 5, 5)
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print(tostring(self.player.score), 4, 4)
+
+    -- render key if we have it
+    if self.player.key then
+        love.graphics.draw(gTextures['keys-n-locks'], gFrames['keys-n-locks'][1], VIRTUAL_WIDTH - 20, 5)
+    end
+
 end
 
 function PlayState:updateCamera()

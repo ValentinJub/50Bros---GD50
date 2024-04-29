@@ -86,6 +86,18 @@ GEMS = {
     1, 2, 3, 4, 5, 6, 7, 8
 }
 
+KEY_IDS = {
+    1, 2, 3, 4
+}
+
+LOCK_IDS = {
+    5, 6, 7, 8
+}
+
+FLAGS_IDS = {
+    1, 2, 3, 4, 5, 6
+}
+
 JUMP_BLOCKS = {}
 
 for i = 1, 30 do
