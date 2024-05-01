@@ -37,7 +37,8 @@ function love.load()
 
     gStateMachine = StateMachine {
         ['start'] = function() return StartState() end,
-        ['play'] = function() return PlayState() end
+        ['play'] = function() return PlayState() end,
+        ['nextlevel'] = function() return NextLevelState() end,
     }
     gStateMachine:change('start')
 

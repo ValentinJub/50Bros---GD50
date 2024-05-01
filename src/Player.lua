@@ -16,6 +16,7 @@ function Player:init(def)
     self.key = false
     self.flag = false
     self.win = false
+    self.levelIncrement = def.levelIncrement
 end
 
 function Player:update(dt)
@@ -78,7 +79,7 @@ function Player:checkObjectCollisions()
             if object.solid then
                 table.insert(collidedObjects, object)
                 if object.consumable then
-                    object.onCollide(self, object)
+                    object.onCollide(self, object, k)
                 end
             elseif object.consumable then
                 object.onConsume(self)

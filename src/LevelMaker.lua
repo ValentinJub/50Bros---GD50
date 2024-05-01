@@ -46,31 +46,6 @@ function LevelMaker.generate(width, height)
                 table.insert(tiles[y],
                     Tile(x, y, tileID, y == 8 and topper or nil, tileset, topperset))
             end
-
-            -- spawn flag
-            table.insert(objects,
-                GameObject {
-                    texture = 'flags',
-                    x = (x - 1) * TILE_SIZE,
-                    y = (7 - 3) * TILE_SIZE,
-                    width = 16,
-                    height = 48,
-                    frame = math.random(#FLAGS_IDS),
-                    collidable = true,
-                    consumable = true,
-                    solid = true,
-                    
-                    onCollide = function(player, object)
-                        if player.flag then
-                            gSounds['pickup']:play()
-                            player.score = player.score + 100
-                            player.flag = false
-                            player.win = true
-                            gStateMachine:change('play')
-                        end
-                    end
-                }
-            )
         end
         -- chance to just be emptiness except for the starting position
         if x ~= 1 and math.random(7) == 1 then
@@ -146,17 +121,54 @@ function LevelMaker.generate(width, height)
                             solid = true,
                             consumable = true,
                             
-                            onCollide = function(player, obj)
+                            onCollide = function(player, obj, k)
                                 if player.key then
                                     gSounds['pickup']:play()
                                     player.score = player.score + 100
                                     player.key = false
                                     player.flag = true
-                                    obj.consumable = false
+                                    table.remove(player.level.objects, k)
+
+                                    -- spawn a flag pole
+                                    table.insert(player.level.objects,
+                                        GameObject {
+                                            texture = 'flags',
+                                            x = (width - 1) * TILE_SIZE,
+                                            y = (7 - 4) * TILE_SIZE,
+                                            width = 16,
+                                            height = 48,
+                                            frame = math.random(#FLAGS_IDS),
+                                            collidable = true,
+                                            consumable = true,
+                                            solid = true,
+                                            
+                                            onCollide = function(player, object)
+                                                if player.flag then
+                                                    gSounds['pickup']:play()
+                                                    player.score = player.score + 100
+                                                    player.flag = false
+                                                    player.win = true
+                                                    gStateMachine:change('nextlevel', {
+                                                        score = player.score,
+                                                        level = player.levelIncrement + 1
+                                                    })
+                                                end
+                                            end
+                                        }
+                                    )
+                                    -- spawn a flag
+                                    local flag = Entity {
+                                        texture = 'flag_tops',
+                                        x = (width - 1.5) * TILE_SIZE,
+                                        y = (7 - 4) * TILE_SIZE,
+                                        width = 16, height = 16,
+                                        stateMachine = StateMachine {
+                                            ['idle'] = function() return PoleIdleState() end
+                                        }
+                                    }
+                                    flag:changeState('idle', {flag = flag})
+                                    table.insert(player.level.entities, flag) 
                                 end
-                                -- if obj ~= nil then
-                                --     obj.consumable = false
-                                -- end
                             end
                         }
                     )

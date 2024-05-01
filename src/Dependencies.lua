@@ -31,6 +31,8 @@ require 'src/Util'
 require 'src/states/BaseState'
 require 'src/states/game/PlayState'
 require 'src/states/game/StartState'
+require 'src/states/game/NextLevelState'
+
 
 -- entity states
 require 'src/states/entity/PlayerFallingState'
@@ -41,6 +43,8 @@ require 'src/states/entity/PlayerWalkingState'
 require 'src/states/entity/snail/SnailChasingState'
 require 'src/states/entity/snail/SnailIdleState'
 require 'src/states/entity/snail/SnailMovingState'
+
+require 'src/states/entity/PoleIdleState'
 
 -- general
 require 'src/Animation'
@@ -75,7 +79,8 @@ gTextures = {
     ['green-alien'] = love.graphics.newImage('graphics/green_alien.png'),
     ['creatures'] = love.graphics.newImage('graphics/creatures.png'),
     ['keys-n-locks'] = love.graphics.newImage('graphics/keys_and_locks.png'),
-    ['flags'] = love.graphics.newImage('graphics/flags.png')
+    ['flags'] = love.graphics.newImage('graphics/flags.png'),
+    ['flag_tops'] = love.graphics.newImage('graphics/flag_tops.png'),
 }
 
 gFrames = {
@@ -88,7 +93,8 @@ gFrames = {
     ['green-alien'] = GenerateQuads(gTextures['green-alien'], 16, 20),
     ['creatures'] = GenerateQuads(gTextures['creatures'], 16, 16),
     ['keys-n-locks'] = GenerateQuads(gTextures['keys-n-locks'], 16, 16),
-    ['flags'] = GenerateQuads(gTextures['flags'], 16, 48)
+    ['flags'] = GenerateQuads(gTextures['flags'], 16, 48),
+    ['flag_tops'] = GenerateQuads(gTextures['flag_tops'], 16, 16)
 }
 
 -- these need to be added after gFrames is initialized because they refer to gFrames from within
